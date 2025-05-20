@@ -1,0 +1,34 @@
+<div class="invoices-container">
+
+  <!-- 🌀 Loading Spinner -->
+  <div *ngIf="loading" class="loading-spinner">
+    <span>Loading invoices...</span>
+  </div>
+
+  <!-- ✅ AG Grid Table (Only show if not loading and date range is valid) -->
+  <div *ngIf="!loading && dateRange.start && dateRange.end">
+    <ag-grid-angular
+      class="ag-theme-alpine"
+      style="width: 100%; height: 500px;"
+      [rowData]="invoices"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [modules]="modules"
+      (rowClicked)="onRowClicked($event)">
+    </ag-grid-angular>
+  </div>
+
+  <!-- ❌ Message if date range not selected (but not loading) -->
+<div *ngIf="!loading && (!dateRange.start || !dateRange.end)" class="no-data-message">
+  <p>Please select a start and end date to view invoices.</p>
+</div>
+
+
+  <!-- ✅ Add Invoice Modal -->
+  <app-add-invoice
+    *ngIf="showAddInvoice"
+    (close)="closeAddInvoice()"
+    (invoiceAdded)="handleInvoiceAdded($event)">
+  </app-add-invoice>
+
+</div>

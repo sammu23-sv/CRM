@@ -1,0 +1,25 @@
+<div class="p-4">
+
+  <!-- 🔄 Loading State -->
+  <div *ngIf="loading" class="text-center py-4">
+    <p class="text-gray-500">Loading BRDs...</p>
+  </div>
+
+  <!-- 📊 AG Grid Table (Shown only when not loading and dateRange is valid) -->
+  <ag-grid-angular
+    *ngIf="!loading && dateRange.start && dateRange.end"
+    class="ag-theme-alpine"
+    style="width: 100%; height: 600px;"
+    [rowData]="brds"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [modules]="modules"
+    (rowClicked)="onRowClicked($event)">
+  </ag-grid-angular>
+
+  <!-- ❌ Centered fallback message if no date range -->
+  <div *ngIf="!loading && (!dateRange.start || !dateRange.end)" class="no-data-message">
+    <p>Please select a start and end date to view BRDs.</p>
+  </div>
+
+</div>

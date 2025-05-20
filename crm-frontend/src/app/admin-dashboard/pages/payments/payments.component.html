@@ -1,0 +1,21 @@
+<div class="payments-container">
+
+  <!-- 📊 Data Table (Only show if date range is selected) -->
+  <div class="grid-wrapper" *ngIf="dateRange.start && dateRange.end">
+    <ag-grid-angular
+      class="ag-theme-alpine"
+      style="width: 100%; height: 500px;"
+      [rowData]="payments"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [modules]="modules"
+      (rowClicked)="onRowClicked($event)">
+    </ag-grid-angular>
+  </div>
+
+  <!-- ❌ Message if date range is not selected -->
+  <div *ngIf="!dateRange.start || !dateRange.end" class="no-data-message">
+    <p>Please select a start and end date to view payments.</p>
+  </div>
+
+</div>
